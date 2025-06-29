@@ -56,3 +56,39 @@ function logout() {
     window.location.href = "index.html";
   });
 }
+
+// Firebase config (ONLY ONCE)
+const firebaseConfig = { ... };
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// Login form handling (ONLY ONCE)
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+  loginForm.addEventListener("submit", (e) => {
+    // ... login logic ...
+  });
+}
+
+// Redirect if not logged in (ONLY ONCE)
+if (window.location.pathname.includes("dashboard.html")) {
+  auth.onAuthStateChanged((user) => {
+    if (!user) {
+      window.location.href = "index.html";
+    } else {
+      setupAutoLogout(); // set up timer
+    }
+  });
+}
+
+// Logout function (ONLY ONCE)
+function logout() {
+  auth.signOut().then(() => {
+    window.location.href = "index.html";
+  });
+}
+
+// Auto logout after inactivity (ONLY ONCE)
+function setupAutoLogout() {
+  // ... timer logic ...
+}
